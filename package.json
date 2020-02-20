@@ -1,47 +1,61 @@
 {
-  "name": "@monorepo-starter/root",
-  "version": "1.0.0",
-  "description": "An example setup of how to do a monorepo, used in our monorepo 'getting started' guide",
-  "repository": "git@github.com:Thinkmill/monorepo-example.git",
-  "author": "Ben Conolly <ben@thinkmill.com.au>",
-  "license": "MIT",
-  "private": true,
-  "workspaces": [
-    "packages/*",
-    "services/*",
-    "apps/*",
-    "website"
-  ],
-  "scripts": {
-    "postinstall": "preconstruct dev && manypkg check",
-    "build": "preconstruct build",
-    "release": "yarn build && changeset publish",
-    "test": "jest",
-    "clean": "manypkg exec rm -rf node_modules && manypkg exec rm -rf dist && rm -rf node_modules",
-    "start:next": "yarn workspace @monorepo-starter/next-app run dev",
-    "start:server": "yarn workspace @monorepo-starter/graphql-api run start",
-    "start": "echo figure out how to start both services simultaneously here",
-    "lint": "yarn eslint ."
-  },
-  "dependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/preset-react": "^7.8.3",
-    "@changesets/cli": "^2.5.0",
-    "@manypkg/cli": "^0.9.0",
-    "@preconstruct/cli": "^1.1.4",
-    "babel-eslint": "^10.0.3",
-    "babel-jest": "^25.1.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "jest": "^25.1.0",
-    "prettier": "^1.19.1"
-  },
-  "preconstruct": {
-    "packages": [
-      "packages/*",
-      "services/*"
-    ]
-  }
+	"name": "@monorepo-starter/root",
+	"version": "1.0.0",
+	"description": "GOLD",
+	"repository": "git@github.com:gold-au/gold.git",
+	"author": "Dominik Wilkowski <hi@dominik-wilkowski.com>",
+	"contributors": [
+		{
+			"name": "Dominik Wilkowski",
+			"email": "Hi@Dominik-Wilkowski.com",
+			"url": "https://dominik-wilkowski.com"
+		}
+	],
+	"license": "MIT",
+	"private": true,
+	"workspaces": [
+		"packages/*",
+		"services/*",
+		"apps/*",
+		"website"
+	],
+	"scripts": {
+		"postinstall": "preconstruct dev && manypkg check",
+		"build": "preconstruct build",
+		"publish-packages": "yarn build && yarn changeset publish",
+		"version-packages": "yarn changeset version",
+		"format": "prettier --write \"**/*.{js,md,mdx,json}\"",
+		"test": "yarn test:format && yarn test:unit && yarn test:integration",
+		"test:format": "prettier --list-different \"**/*.{js,md,mdx,json}\"",
+		"test:unit": "jest",
+		"test:unit-watch": "jest --watch --coverage",
+		"test:integration": "node helpers/tester.js",
+		"start": "/bin/sh -c 'cd components/${1:-$0} && yarn start'",
+		"start:next": "yarn workspace @monorepo-starter/next-app run dev",
+		"start:server": "yarn workspace @monorepo-starter/graphql-api run start",
+		"dep:test": "manypkg check && preconstruct build || preconstruct dev",
+		"dep:fix": "manypkg fix",
+		"nuke": "yarn nuke:lock && yarn nuke:node_modules",
+		"nuke:node_modules": "manypkg exec rm -rf node_modules && manypkg exec rm -rf dist && rm -rf node_modules",
+		"nuke:lock": "rm yarn.lock && rm yarn-error.log ; true"
+	},
+	"dependencies": {
+		"@babel/core": "^7.8.4",
+		"@babel/plugin-transform-runtime": "^7.8.3",
+		"@babel/preset-env": "^7.8.4",
+		"@babel/preset-react": "^7.8.3",
+		"@changesets/cli": "^2.5.0",
+		"@emotion/core": "^10.0.27",
+		"@manypkg/cli": "^0.9.0",
+		"@preconstruct/cli": "^1.1.4",
+		"babel-jest": "^25.1.0",
+		"jest": "^25.1.0",
+		"prettier": "^1.19.1"
+	},
+	"preconstruct": {
+		"packages": [
+			"packages/*",
+			"services/*"
+		]
+	}
 }
