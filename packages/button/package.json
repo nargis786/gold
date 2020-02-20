@@ -1,5 +1,5 @@
 {
-	"name": "@monorepo-starter/button",
+	"name": "@gov-au/button",
 	"version": "1.0.0",
 	"main": "dist/button.cjs.js",
 	"module": "dist/button.esm.js",
